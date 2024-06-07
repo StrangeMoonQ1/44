@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title>
+    <style type="text/css">
+        .item {
+            width: 150px;
+            height: 150px;
+            background-size:100% 95%;
+            background-repeat: no-repeat;
+            margin-top: 20px;
+            margin-left: 20px;
+        }
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            height: 200px;
+            width: 1400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .act {
+           border: 1px solid darkred
+        }
+        
+    </style>
+</head>
+<body>
+    <h1>Score: <span class="point">0</span></h1>
+    <div class="row">
+    </div>
+    <script type="text/javascript">
+    //див-родитель
+    let row = document.querySelector(".row");
+    let point = document.querySelector(".point")
+    let score = 0
+
+    //хранение картинок
+    let images = ["isaac/1.webp", "isaac/2.webp", "isaac/3.webp", "isaac/4.webp", "isaac/5.webp", "isaac/6.webp", 
+                "isaac/1.webp", "isaac/2.webp","isaac/3.webp", "isaac/4.webp", "isaac/5.webp", "isaac/6.webp",
+                "isaac/7.webp", "isaac/8.webp", "isaac/9.webp", "isaac/10.webp","isaac/11.webp", "isaac/12.webp", "isaac/13.webp", 
+                "isaac/7.webp", "isaac/8.webp", "isaac/9.webp", "isaac/10.webp","isaac/11.webp", "isaac/12.webp", "isaac/13.webp",
+                "isaac/14.webp", "isaac/15.webp", "isaac/16.webp", "isaac/14.webp", "isaac/15.webp", "isaac/16.webp"];
+    let pokepast = null
+
+    let getRandom = function(num){
+        let rand = Math.random() * num
+        let round = Math.round(rand)
+
+        return round
+    }
+    console.log(images)
+
+
+    for(let i = 0; i < 32; i++ ){
+        let pokemon = document.createElement("div")
+        row.appendChild(pokemon)
+
+        pokemon.classList.add("item")
+
+
+        let randomIndex = getRandom(images.length - 1)
+        console.log(randomIndex)
+
+
+        pokemon.style.backgroundImage = 'url(' + images[randomIndex] + ')'
+
+        pokemon.image = images[randomIndex]
+        images.splice(randomIndex , 1)
+        pokemon.onclick = function(){   
+            pokemon.classList.add("act")
+            if(pokepast == null){
+                pokepast = pokemon
+            }else if(pokemon.image == pokepast.image){
+                pokepast.style.opacity = 0
+                pokemon.style.opacity = 0
+                pokepast = null
+                score = score + 1
+                point.innerHTML = score
+            }else if(pokemon.image != pokepast.image){
+                pokemon.classList.remove("act")
+                pokepast.classList.remove("act")
+                pokepast = null
+                score = score - 1
+                point.innerHTML = score
+            }
+        }
+    }
+    </script>
+</body>
+</html>
